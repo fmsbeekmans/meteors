@@ -6,12 +6,12 @@ import cats.syntax.monadError.*
 import cats.syntax.order.*
 import com.fmsbeekmans.challenge.config.NearEarthObjectClientConfig
 import com.fmsbeekmans.challenge.model.DateRangeInclusive
-import fs2.{io as _, *}
+import fs2.{ io as _, * }
 import io.circe.*
 import org.http4s.Method.GET
 import org.http4s.client.Client
 import org.http4s.circe.CirceEntityDecoder.*
-import org.http4s.{QueryParamEncoder, Request}
+import org.http4s.{ QueryParamEncoder, Request }
 import org.typelevel.log4cats.Logger
 
 import java.time.LocalDate
@@ -52,7 +52,6 @@ case class NearEarthObjectClient(
       .expectOption[Json](request)
       .onError(e => logger.error(e)(e.getMessage))
   }
-
 
   def range(dateRange: DateRangeInclusive): Stream[IO, Json] =
     dateRange
