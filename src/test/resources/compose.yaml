@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres
+    healthcheck:
+      test: "/usr/bin/pg_isready -U nutsix"
+      interval: 5s
+      timeout: 10s
+      retries: 120
+    ports:
+      - 65432:5432
+    environment:
+      POSTGRES_DB: nutsix
+      POSTGRES_USER: nutsix
+      POSTGRES_PASSWORD: L@r730g09uCa
+  sqitch:
+    image: sqitch/sqitch:v1.4.1
+    volumes:
+      - "./db:/repo"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: deploy
